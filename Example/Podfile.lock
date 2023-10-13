@@ -1,0 +1,27 @@
+PODS:
+  - BPenPlusSDK (0.1.0)
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+
+DEPENDENCIES:
+  - BPenPlusSDK (from `../`)
+  - FBSnapshotTestCase
+
+SPEC REPOS:
+  trunk:
+    - FBSnapshotTestCase
+
+EXTERNAL SOURCES:
+  BPenPlusSDK:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  BPenPlusSDK: 88a9b28224c9d329308f91dd24590c7dc0411735
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+
+PODFILE CHECKSUM: a47a856bbf28d279045aebf0c6d2e786868bce64
+
+COCOAPODS: 1.13.0

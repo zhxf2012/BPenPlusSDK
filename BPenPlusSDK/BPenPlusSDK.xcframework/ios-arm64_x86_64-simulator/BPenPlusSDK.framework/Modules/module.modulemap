@@ -1,0 +1,6 @@
+framework module BPenPlusSDK {
+  umbrella header "BPenPlusSDK.h"
+  export *
+
+  module * { export * }
+}
