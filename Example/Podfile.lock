@@ -1,27 +1,44 @@
 PODS:
-  - BPenPlusSDK (0.1.0)
+  - BPBleOTA (0.6.2):
+    - iOSDFULibrary
+    - iOSMcuManagerLibrary
+  - BPenPlusSDK (2.1.8):
+    - BPBleOTA (~> 0.6.2)
   - FBSnapshotTestCase (2.1.4):
     - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
+  - iOSDFULibrary (4.13.0):
+    - ZIPFoundation (= 0.9.11)
+  - iOSMcuManagerLibrary (1.3.3):
+    - SwiftCBOR (= 0.4.4)
+  - SwiftCBOR (0.4.4)
+  - ZIPFoundation (0.9.11)
 
 DEPENDENCIES:
-  - BPenPlusSDK (from `../`)
+  - BPenPlusSDK
   - FBSnapshotTestCase
 
 SPEC REPOS:
   trunk:
+    - BPBleOTA
+    - BPenPlusSDK
     - FBSnapshotTestCase
-
-EXTERNAL SOURCES:
-  BPenPlusSDK:
-    :path: "../"
+    - iOSDFULibrary
+    - iOSMcuManagerLibrary
+    - SwiftCBOR
+    - ZIPFoundation
 
 SPEC CHECKSUMS:
-  BPenPlusSDK: 88a9b28224c9d329308f91dd24590c7dc0411735
+  BPBleOTA: b23c7b149f16e1bcd3c25f28191ba21fc3931a8c
+  BPenPlusSDK: 6139abcf11cdb924c82989c2ddd6fa2057c7878e
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  iOSDFULibrary: 3b9de67ed4bfb901b5f09c2fea843f65e152612d
+  iOSMcuManagerLibrary: 4592341e0ec26a4346c0837de375d1a28a60df9a
+  SwiftCBOR: ce5354ec8b660da2d6fc754462881119dbe1f963
+  ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: a47a856bbf28d279045aebf0c6d2e786868bce64
+PODFILE CHECKSUM: e2900ba4c1e167ef7d96ced09026cc40a5c6b340
 
 COCOAPODS: 1.13.0

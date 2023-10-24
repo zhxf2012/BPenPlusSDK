@@ -60,7 +60,7 @@
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
-		6152DF946D0FC5E292C49F28 /* BPenPlusSDK.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = BPenPlusSDK.podspec; path = ../BPenPlusSDK.podspec; sourceTree = "<group>"; };
+		6152DF946D0FC5E292C49F28 /* BPenPlusSDK.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = BPenPlusSDK.podspec; path = ../BPenPlusSDK.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		74B034FE8B4D3DA5AD90407B /* Pods-BPenPlusSDK_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BPenPlusSDK_Example.release.xcconfig"; path = "Target Support Files/Pods-BPenPlusSDK_Example/Pods-BPenPlusSDK_Example.release.xcconfig"; sourceTree = "<group>"; };
 		7A477E0F0E59E3D5B77C17A7 /* Pods-BPenPlusSDK_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BPenPlusSDK_Tests.release.xcconfig"; path = "Target Support Files/Pods-BPenPlusSDK_Tests/Pods-BPenPlusSDK_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -347,10 +347,20 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-BPenPlusSDK_Example/Pods-BPenPlusSDK_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/BPenPlusSDK/BPenPlusSDK.framework",
+				"${BUILT_PRODUCTS_DIR}/BPBleOTA/BPBleOTA.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftCBOR/SwiftCBOR.framework",
+				"${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSMcuManagerLibrary/iOSMcuManagerLibrary.framework",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/BPenPlusSDK/BPenPlusSDK.framework/BPenPlusSDK",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BPBleOTA.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftCBOR.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSDFULibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSMcuManagerLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BPenPlusSDK.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
