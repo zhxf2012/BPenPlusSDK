@@ -22,15 +22,16 @@ let package = Package(
         
         .target(
                     name: "BPenPlusSDKSPM",
-                    dependencies: ["BPenPlusSDKInner",
+                    dependencies: ["BPenPlusSDK",
                                    .product(name: "BPBleOTA",package: "BPBleOTA")]
                 ),
         .binaryTarget(
-            name: "BPenPlusSDKInner",
+            name: "BPenPlusSDK",
             path: "BPenPlusSDK/BPenPlusSDK.xcframework"
         ),
         .testTarget(
             name: "BPenPlusSDKSPMTests",
             dependencies: ["BPenPlusSDKSPM"]),
-    ]
+    ],
+    swiftLanguageVersions: [.v5]
 )
