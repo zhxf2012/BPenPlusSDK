@@ -25,13 +25,14 @@ Pod::Spec.new do |spec|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   spec.description  = <<-DESC
-This sdk provide features list below:
-1.scan and discovery bbb smart pens
-2.connect to pens from iOS by BLE
-3.get data from pen that connect to iOS,including points data when write with pens,pen state such as flash space,battery,data sync mode , fireware version and so on.
-4.check new fireware available and ota the pen to new fireware
-5.sdk build-in canvas for draw strokes with points from pen. 
-                   DESC
+                        BPenPlusSDK is a libray for smart pen product by shenzhen bangbangbang tech.
+                        It provides features list below:
+                        1.scan and discovery bbb smart pens
+                        2.connect to pens from iOS by BLE
+                        3.get data from pen that connect to iOS,including points data when write with pens,pen state such as flash space,battery,data sync mode , fireware version and so on.
+                        4.check new fireware available and ota the pen to new fireware
+                        5.sdk build-in canvas for draw strokes with points from pen.
+                     DESC
 
   spec.homepage     = "https://github.com/zhxf2012/BPenPlusSDK"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
