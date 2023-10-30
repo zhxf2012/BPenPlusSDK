@@ -124,6 +124,14 @@ typedef enum : NSUInteger {
 /// @param shouldReport 是否报告 默认不报告
 - (void)setShouldReportCameraCoveredState:(BOOL)shouldReport;
 
+/// 设置书写时是否开启书写时改变笔上的指示灯颜色，默认不开启；若需开启，在笔连接后调用此方法开启；本功能B8系列需要固件23即以上的版本支持；若硬件类型或者固件版本不支持，则此命令无效
+/// @param enableWritingLight 为true则开启书写时改变笔上的指示灯颜色
+- (void)setEnableWritingLight:(BOOL)enableWritingLight;
+
+/// 设置实时模式每帧点数，每帧点数越多，则收到的点的时间间隔越长；越小则越频繁，收到的点约及时，但可能造成拥堵而丢实时点；在笔连接后调用此方法开启，本功能B8系列需要固件23即以上的版本支持，若硬件类型或者固件版本不支持，则此命令无效
+/// @param maxPointsCountEachFrame 每帧实时数据最大的所点数，可选范围1～9
+- (void)setRealtimeMaxOutPointsCountEachFrame:(int)maxPointsCountEachFrame;
+
 /*======Begin  以下三个方法为sdk提供的调试用的方法（开发调试用，不建议作为正式产品功能使用）======*/
 /// SDK开始记录原始数据到指定二进制流文件，文件名无需后缀
 /// @param path 原始数据写入的文件的路径。若该路径下文件不存在，则创建文件；若文件不可写入，则完成回调返回相关error；如果文件已有内容，后续写入的内容会在当前文件内容后面拼接写入，所以建议传入的文件为空或者不存在，若非空文件建议用sdk写入过内容的文件，其他情况不能保证当前文件已有内容是按照sdk要求的格式写入内容的，这种情况下可能在读取文件时产生错误的数据。

@@ -22,7 +22,7 @@ pod 'BPenPlusSDK'
 
 ## Author
 
-zhouxingfa, zhxf2005307@163.com
+zhouxingfa, zhouxingfa@bibibetter.com
 
 ## License
 

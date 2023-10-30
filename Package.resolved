@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/zhxf2012/BPBleOTA",
       "state" : {
-        "revision" : "e8afd898728d40402f21ee326159b1d8799b5888",
-        "version" : "0.6.2"
+        "revision" : "6969cadb4cf94f97bbd4e937dd7e498dd4f2889b",
+        "version" : "0.6.4"
       }
     },
     {

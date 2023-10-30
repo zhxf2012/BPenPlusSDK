@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "BPenPlusSDK"
-  spec.version      = "2.1.8"
+  spec.version      = "2.1.9"
   spec.summary      = "BPenPlusSDK is a libray for smart pen product by shenzhen bangbangbang tech."
 
   # This description is used to generate tags and improve search results.
@@ -144,6 +144,6 @@ This sdk provide features list below:
   # spec.dependency "JSONKit", "~> 1.4"
   
   spec.vendored_framework ='BPenPlusSDK/BPenPlusSDK.xcframework'
-  spec.dependency 'BPBleOTA', '~> 0.6.2'
+  spec.dependency 'BPBleOTA', '~> 0.6.4'
 
 end

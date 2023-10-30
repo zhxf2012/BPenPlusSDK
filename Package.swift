@@ -14,7 +14,7 @@ let package = Package(
             targets: ["BPenPlusSDKSPM"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/zhxf2012/BPBleOTA", from: "0.6.0")
+        .package(url: "https://github.com/zhxf2012/BPBleOTA", from: "0.6.4")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
