@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "BPenPlusSDK"
-  spec.version      = "2.1.9"
+  spec.version      = "2.1.9.1"
   spec.summary      = "BPenPlusSDK is a libray for smart pen product by shenzhen bangbangbang tech."
 
   # This description is used to generate tags and improve search results.
@@ -32,7 +32,7 @@ Pod::Spec.new do |spec|
                         3.get data from pen that connect to iOS,including points data when write with pens,pen state such as flash space,battery,data sync mode , fireware version and so on.
                         4.check new fireware available and ota the pen to new fireware
                         5.sdk build-in canvas for draw strokes with points from pen.
-                     DESC
+                      DESC
 
   spec.homepage     = "https://github.com/zhxf2012/BPenPlusSDK"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
