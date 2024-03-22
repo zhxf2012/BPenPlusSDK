@@ -129,6 +129,9 @@ typedef enum : NSUInteger {
 - (void)setEnableWritingLight:(BOOL)enableWritingLight;
 
 
+/// 设置实时模式每帧点数，每帧点数越多，则收到的点的时间间隔越长；越小则越频繁，收到的点约及时，但可能造成拥堵而丢实时点；在笔连接后调用此方法开启，本功能B8系列需要固件23即以上的版本支持，若硬件类型或者固件版本不支持，则此命令无效
+/// @param maxPointsCountEachFrame 每帧实时数据最大的所点数，可选范围1～9
+- (void)setRealtimeMaxOutPointsCountEachFrame:(int)maxPointsCountEachFrame;
 
 /*======Begin  以下三个方法为sdk提供的调试用的方法（开发调试用，不建议作为正式产品功能使用）======*/
 /// SDK开始记录原始数据到指定二进制流文件，文件名无需后缀

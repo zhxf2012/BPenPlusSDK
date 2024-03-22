@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "BPenPlusSDK"
-  spec.version      = "2.1.9.1"
+  spec.version      = "2.2.0"
   spec.summary      = "BPenPlusSDK is a libray for smart pen product by shenzhen bangbangbang tech."
 
   # This description is used to generate tags and improve search results.
