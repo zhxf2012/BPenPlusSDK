@@ -1,0 +1,57 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
+// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name BPBleOTA
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import CoreBluetooth
+import Foundation
+import NordicDFU
+import Swift
+import UIKit
+import UniformTypeIdentifiers
+import ZIPFoundation
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import iOSMcuManagerLibrary
+public struct BPBleOTAService {
+  public var text: Swift.String {
+    get
+  }
+  public init()
+}
+@objc @_inheritsConvenienceInitializers public class BPOTAManager : ObjectiveC.NSObject {
+  @objc public enum DFUProtocolType : Swift.Int {
+    case NordicDFU
+    case SMPDFU
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public enum BPDFUError : Swift.Int {
+    case unknow
+    case simlatorDoesNotSupportDFU
+    case invalidFirmwareFile
+    case startDFUFailed
+    case dfuCancel
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public var smpEstimatedSwapTime: Swift.Double
+  @objc public var smpEraseAppSettings: Swift.Bool
+  @objc public var smpPipelineDepth: Swift.Int
+  @objc public var smpByteAlignment: Swift.Int
+  @objc public func otaWithPeripheral(_ peripheral: CoreBluetooth.CBPeripheral, dfuProtocol: BPBleOTA.BPOTAManager.DFUProtocolType, firmareFilePath: Swift.String, otaProgress: @escaping ((Swift.Int, Swift.String) -> Swift.Void), completedHandel: @escaping ((Swift.Bool, (any Swift.Error)?) -> Swift.Void))
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension BPBleOTA.BPOTAManager.DFUProtocolType : Swift.Equatable {}
+extension BPBleOTA.BPOTAManager.DFUProtocolType : Swift.Hashable {}
+extension BPBleOTA.BPOTAManager.DFUProtocolType : Swift.RawRepresentable {}
+extension BPBleOTA.BPOTAManager.BPDFUError : Swift.Equatable {}
+extension BPBleOTA.BPOTAManager.BPDFUError : Swift.Hashable {}
+extension BPBleOTA.BPOTAManager.BPDFUError : Swift.RawRepresentable {}

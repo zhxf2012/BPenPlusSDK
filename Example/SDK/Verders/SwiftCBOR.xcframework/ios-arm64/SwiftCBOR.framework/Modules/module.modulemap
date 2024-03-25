@@ -1,0 +1,4 @@
+framework module SwiftCBOR {
+  header "SwiftCBOR-Swift.h"
+  requires objc
+}

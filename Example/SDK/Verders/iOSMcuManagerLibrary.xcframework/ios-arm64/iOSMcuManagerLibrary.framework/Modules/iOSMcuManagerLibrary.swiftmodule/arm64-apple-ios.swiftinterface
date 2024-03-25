@@ -1,0 +1,930 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
+// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name iOSMcuManagerLibrary
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import CommonCrypto
+import CoreBluetooth
+import Dispatch
+import Foundation
+import OSLog
+import Swift
+import SwiftCBOR
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import os.log
+import os
+public class BasicManager : iOSMcuManagerLibrary.McuManager {
+  public static let MAX_ECHO_MESSAGE_SIZE_BYTES: Swift.Int
+  public init(transporter: any iOSMcuManagerLibrary.McuMgrTransport)
+  public func eraseAppSettings(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrResponse>)
+  @objc deinit
+}
+open class CBORMappable {
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @objc deinit
+}
+extension SwiftCBOR.CBOR : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension Swift.Dictionary where Key == SwiftCBOR.CBOR, Value == SwiftCBOR.CBOR {
+  public var description: Swift.String {
+    get
+  }
+}
+extension SwiftCBOR.CBOR.Tag : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+public class ConfigManager : iOSMcuManagerLibrary.McuManager {
+  public init(transporter: any iOSMcuManagerLibrary.McuMgrTransport)
+  public func read(name: Swift.String, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrConfigResponse>)
+  public func write(name: Swift.String, value: Swift.String, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrResponse>)
+  @objc deinit
+}
+public class CrashManager : iOSMcuManagerLibrary.McuManager {
+  public enum CrashTest : Swift.String {
+    case div0
+    case jump0
+    case ref0
+    case assert
+    case wdog
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public init(transporter: any iOSMcuManagerLibrary.McuMgrTransport)
+  public func test(crash: iOSMcuManagerLibrary.CrashManager.CrashTest, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrResponse>)
+  @objc deinit
+}
+public class DefaultManager : iOSMcuManagerLibrary.McuManager {
+  public init(transporter: any iOSMcuManagerLibrary.McuMgrTransport)
+  public func echo(_ echo: Swift.String, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrEchoResponse>)
+  public func consoleEcho(_ echoOn: Swift.Bool, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrResponse>)
+  public func taskStats(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrTaskStatsResponse>)
+  public func memoryPoolStats(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrMemoryPoolStatsResponse>)
+  public func readDatetime(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrDateTimeResponse>)
+  public func writeDatetime(date: Foundation.Date = Date(), timeZone: Foundation.TimeZone? = nil, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrResponse>)
+  public func reset(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrResponse>)
+  public func params(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrParametersResponse>)
+  @objc deinit
+}
+public class FileSystemManager : iOSMcuManagerLibrary.McuManager {
+  public init(transporter: any iOSMcuManagerLibrary.McuMgrTransport)
+  public func download(name: Swift.String, offset: Swift.UInt, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrFsDownloadResponse>)
+  public func upload(name: Swift.String, data: Foundation.Data, offset: Swift.UInt, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrFsUploadResponse>)
+  public func download(name: Swift.String, delegate: (any iOSMcuManagerLibrary.FileDownloadDelegate)?) -> Swift.Bool
+  public func upload(name: Swift.String, data: Foundation.Data, delegate: any iOSMcuManagerLibrary.FileUploadDelegate) -> Swift.Bool
+  public enum UploadState : Swift.UInt8 {
+    case none
+    case uploading
+    case downloading
+    case paused
+    public init?(rawValue: Swift.UInt8)
+    public typealias RawValue = Swift.UInt8
+    public var rawValue: Swift.UInt8 {
+      get
+    }
+  }
+  public func cancelTransfer(error: (any Swift.Error)? = nil)
+  public func pauseTransfer()
+  public func continueTransfer()
+  @objc deinit
+}
+public enum FileTransferError : Swift.Error {
+  case invalidPayload
+  case invalidData
+  case mcuMgrErrorCode(iOSMcuManagerLibrary.McuMgrReturnCode)
+}
+extension iOSMcuManagerLibrary.FileTransferError : Foundation.LocalizedError {
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public protocol FileUploadDelegate : AnyObject {
+  func uploadProgressDidChange(bytesSent: Swift.Int, fileSize: Swift.Int, timestamp: Foundation.Date)
+  func uploadDidFail(with error: any Swift.Error)
+  func uploadDidCancel()
+  func uploadDidFinish()
+}
+public protocol FileDownloadDelegate : AnyObject {
+  func downloadProgressDidChange(bytesDownloaded: Swift.Int, fileSize: Swift.Int, timestamp: Foundation.Date)
+  func downloadDidFail(with error: any Swift.Error)
+  func downloadDidCancel()
+  func download(of name: Swift.String, didFinish data: Foundation.Data)
+}
+public protocol FirmwareUpgradeController {
+  func pause()
+  func resume()
+  func cancel()
+  func isPaused() -> Swift.Bool
+  func isInProgress() -> Swift.Bool
+}
+public class FirmwareUpgradeManager : iOSMcuManagerLibrary.FirmwareUpgradeController, iOSMcuManagerLibrary.ConnectionObserver {
+  weak public var logDelegate: (any iOSMcuManagerLibrary.McuMgrLogDelegate)? {
+    get
+    set
+  }
+  public var mode: iOSMcuManagerLibrary.FirmwareUpgradeMode
+  public init(transporter: any iOSMcuManagerLibrary.McuMgrTransport, delegate: (any iOSMcuManagerLibrary.FirmwareUpgradeDelegate)?)
+  public func start(data: Foundation.Data, using configuration: iOSMcuManagerLibrary.FirmwareUpgradeConfiguration = FirmwareUpgradeConfiguration()) throws
+  public func start(images: [iOSMcuManagerLibrary.ImageManager.Image], using configuration: iOSMcuManagerLibrary.FirmwareUpgradeConfiguration = FirmwareUpgradeConfiguration()) throws
+  public func cancel()
+  public func pause()
+  public func resume()
+  public func isPaused() -> Swift.Bool
+  public func isInProgress() -> Swift.Bool
+  public func setUploadMtu(mtu: Swift.Int) throws
+  public func transport(_ transport: any iOSMcuManagerLibrary.McuMgrTransport, didChangeStateTo state: iOSMcuManagerLibrary.McuMgrTransportState)
+  @objc deinit
+}
+public struct FirmwareUpgradeConfiguration : Swift.Codable {
+  public var estimatedSwapTime: Foundation.TimeInterval
+  public var eraseAppSettings: Swift.Bool
+  public var pipelineDepth: Swift.Int
+  public var byteAlignment: iOSMcuManagerLibrary.ImageUploadAlignment
+  public var reassemblyBufferSize: Swift.UInt64
+  public var pipeliningEnabled: Swift.Bool {
+    get
+  }
+  public init(estimatedSwapTime: Foundation.TimeInterval = 0.0, eraseAppSettings: Swift.Bool = true, pipelineDepth: Swift.Int = 1, byteAlignment: iOSMcuManagerLibrary.ImageUploadAlignment = .disabled, reassemblyBufferSize: Swift.UInt64 = 0)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension iOSMcuManagerLibrary.FirmwareUpgradeManager : iOSMcuManagerLibrary.ImageUploadDelegate {
+  public func uploadProgressDidChange(bytesSent: Swift.Int, imageSize: Swift.Int, timestamp: Foundation.Date)
+  public func uploadDidFail(with error: any Swift.Error)
+  public func uploadDidCancel()
+  public func uploadDidFinish()
+}
+public enum FirmwareUpgradeError : Swift.Error {
+  case unknown(Swift.String)
+  case invalidResponse(iOSMcuManagerLibrary.McuMgrResponse)
+  case mcuMgrReturnCodeError(iOSMcuManagerLibrary.McuMgrReturnCode)
+  case connectionFailedAfterReset
+}
+extension iOSMcuManagerLibrary.FirmwareUpgradeError : Foundation.LocalizedError {
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public enum FirmwareUpgradeState {
+  case none
+  case requestMcuMgrParameters, eraseAppSettings
+  case upload, success
+  case validate, test, confirm, reset
+  public static func == (a: iOSMcuManagerLibrary.FirmwareUpgradeState, b: iOSMcuManagerLibrary.FirmwareUpgradeState) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum FirmwareUpgradeMode : Swift.CustomStringConvertible, Swift.CaseIterable {
+  case testOnly
+  case confirmOnly
+  case testAndConfirm
+  public var description: Swift.String {
+    get
+  }
+  public static func == (a: iOSMcuManagerLibrary.FirmwareUpgradeMode, b: iOSMcuManagerLibrary.FirmwareUpgradeMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public typealias AllCases = [iOSMcuManagerLibrary.FirmwareUpgradeMode]
+  public static var allCases: [iOSMcuManagerLibrary.FirmwareUpgradeMode] {
+    get
+  }
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol FirmwareUpgradeDelegate : AnyObject {
+  func upgradeDidStart(controller: any iOSMcuManagerLibrary.FirmwareUpgradeController)
+  func upgradeStateDidChange(from previousState: iOSMcuManagerLibrary.FirmwareUpgradeState, to newState: iOSMcuManagerLibrary.FirmwareUpgradeState)
+  func upgradeDidComplete()
+  func upgradeDidFail(inState state: iOSMcuManagerLibrary.FirmwareUpgradeState, with error: any Swift.Error)
+  func upgradeDidCancel(state: iOSMcuManagerLibrary.FirmwareUpgradeState)
+  func uploadProgressDidChange(bytesSent: Swift.Int, imageSize: Swift.Int, timestamp: Foundation.Date)
+}
+public class ImageManager : iOSMcuManagerLibrary.McuManager {
+  public typealias Image = (image: Swift.Int, data: Foundation.Data)
+  public init(transporter: any iOSMcuManagerLibrary.McuMgrTransport)
+  public func list(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrImageStateResponse>)
+  public func upload(data: Foundation.Data, image: Swift.Int, offset: Swift.UInt64, alignment: iOSMcuManagerLibrary.ImageUploadAlignment, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrUploadResponse>)
+  public func test(hash: [Swift.UInt8], callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrImageStateResponse>)
+  public func confirm(hash: [Swift.UInt8]? = nil, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrImageStateResponse>)
+  public func upload(images: [iOSMcuManagerLibrary.ImageManager.Image], using configuration: iOSMcuManagerLibrary.FirmwareUpgradeConfiguration = FirmwareUpgradeConfiguration(), delegate: (any iOSMcuManagerLibrary.ImageUploadDelegate)?) -> Swift.Bool
+  public func erase(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrResponse>)
+  public func eraseState(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrResponse>)
+  public func coreList(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrResponse>)
+  public func coreLoad(offset: Swift.UInt, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrCoreLoadResponse>)
+  public func coreErase(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrResponse>)
+  public enum UploadState : Swift.UInt8 {
+    case none
+    case uploading
+    case paused
+    public init?(rawValue: Swift.UInt8)
+    public typealias RawValue = Swift.UInt8
+    public var rawValue: Swift.UInt8 {
+      get
+    }
+  }
+  public func cancelUpload(error: (any Swift.Error)? = nil)
+  public func pauseUpload()
+  public func continueUpload()
+  @objc deinit
+}
+public enum ImageUploadAlignment : Swift.UInt64, Swift.Codable, Swift.CaseIterable, Swift.CustomStringConvertible {
+  case disabled
+  case twoByte
+  case fourByte
+  case eightByte
+  case sixteenByte
+  public var description: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.UInt64)
+  public typealias AllCases = [iOSMcuManagerLibrary.ImageUploadAlignment]
+  public typealias RawValue = Swift.UInt64
+  public static var allCases: [iOSMcuManagerLibrary.ImageUploadAlignment] {
+    get
+  }
+  public var rawValue: Swift.UInt64 {
+    get
+  }
+}
+public enum ImageUploadError : Swift.Error {
+  case invalidPayload
+  case invalidData
+  case invalidUploadSequenceNumber(iOSMcuManagerLibrary.McuSequenceNumber)
+  case mcuMgrErrorCode(iOSMcuManagerLibrary.McuMgrReturnCode)
+}
+extension iOSMcuManagerLibrary.ImageUploadError : Foundation.LocalizedError {
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public protocol ImageUploadDelegate : AnyObject {
+  func uploadProgressDidChange(bytesSent: Swift.Int, imageSize: Swift.Int, timestamp: Foundation.Date)
+  func uploadDidFail(with error: any Swift.Error)
+  func uploadDidCancel()
+  func uploadDidFinish()
+}
+public class LogManager : iOSMcuManagerLibrary.McuManager {
+  public init(transporter: any iOSMcuManagerLibrary.McuMgrTransport)
+  public func show(log: Swift.String? = nil, minIndex: Swift.UInt64? = nil, minTimestamp: Foundation.Date? = nil, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrLogResponse>)
+  public func clear(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrResponse>)
+  public func moduleList(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrResponse>)
+  public func levelList(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrLevelListResponse>)
+  public func logsList(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrLogListResponse>)
+  @objc deinit
+}
+public typealias McuSequenceNumber = Swift.UInt8
+open class McuManager {
+  public static let COAP_PATH: Swift.String
+  public static let HEADER_KEY: Swift.String
+  public static let DEFAULT_SEND_TIMEOUT_SECONDS: Swift.Int
+  final public let transporter: any iOSMcuManagerLibrary.McuMgrTransport
+  final public let group: iOSMcuManagerLibrary.McuMgrGroup
+  public var mtu: Swift.Int
+  weak public var logDelegate: (any iOSMcuManagerLibrary.McuMgrLogDelegate)?
+  public init(group: iOSMcuManagerLibrary.McuMgrGroup, transporter: any iOSMcuManagerLibrary.McuMgrTransport)
+  public func send<T, R>(op: iOSMcuManagerLibrary.McuMgrOperation, commandId: R, payload: [Swift.String : SwiftCBOR.CBOR]?, timeout: Swift.Int = DEFAULT_SEND_TIMEOUT_SECONDS, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<T>) where T : iOSMcuManagerLibrary.McuMgrResponse, R : Swift.RawRepresentable, R.RawValue == Swift.UInt8
+  public func send<T, R>(op: iOSMcuManagerLibrary.McuMgrOperation, flags: Swift.UInt8, commandId: R, payload: [Swift.String : SwiftCBOR.CBOR]?, timeout: Swift.Int = DEFAULT_SEND_TIMEOUT_SECONDS, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<T>) where T : iOSMcuManagerLibrary.McuMgrResponse, R : Swift.RawRepresentable, R.RawValue == Swift.UInt8
+  public func send<T>(data: Foundation.Data, timeout: Swift.Int, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<T>) where T : iOSMcuManagerLibrary.McuMgrResponse
+  public static func buildPacket<R>(scheme: iOSMcuManagerLibrary.McuMgrScheme, op: iOSMcuManagerLibrary.McuMgrOperation, flags: Swift.UInt8, group: Swift.UInt16, sequenceNumber: iOSMcuManagerLibrary.McuSequenceNumber, commandId: R, payload: [Swift.String : SwiftCBOR.CBOR]?) -> Foundation.Data where R : Swift.RawRepresentable, R.RawValue == Swift.UInt8
+  public static func dateToString(date: Foundation.Date, timeZone: Foundation.TimeZone? = nil) -> Swift.String
+  public func setMtu(_ mtu: Swift.Int) throws
+  public static func getDefaultMtu(scheme: iOSMcuManagerLibrary.McuMgrScheme) -> Swift.Int
+  @objc deinit
+}
+public typealias McuMgrCallback<T> = (T?, (any Swift.Error)?) -> Swift.Void where T : iOSMcuManagerLibrary.McuMgrResponse
+public enum McuManagerError : Swift.Error, Foundation.LocalizedError {
+  case mtuValueOutsideOfValidRange(_: Swift.Int)
+  case mtuValueHasNotchanged(_: Swift.Int)
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public enum McuMgrGroup {
+  case `default`
+  case image
+  case stats
+  case config
+  case logs
+  case crash
+  case split
+  case run
+  case fs
+  case basic
+  case peruser(value: Swift.UInt16)
+}
+public enum McuMgrOperation : Swift.UInt8 {
+  case read
+  case readResponse
+  case write
+  case writeResponse
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public enum McuMgrReturnCode : Swift.UInt64, Swift.Error {
+  case ok
+  case unknown
+  case noMemory
+  case inValue
+  case timeout
+  case noEntry
+  case badState
+  case responseIsTooLong
+  case unsupported
+  case corruptPayload
+  case busy
+  case unrecognized
+  public func isSuccess() -> Swift.Bool
+  public func isError() -> Swift.Bool
+  public init?(rawValue: Swift.UInt64)
+  public typealias RawValue = Swift.UInt64
+  public var rawValue: Swift.UInt64 {
+    get
+  }
+}
+extension iOSMcuManagerLibrary.McuMgrReturnCode : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension iOSMcuManagerLibrary.McuMgrBleTransport : CoreBluetooth.CBCentralManagerDelegate {
+  @objc dynamic public func centralManagerDidUpdateState(_ central: CoreBluetooth.CBCentralManager)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didConnect peripheral: CoreBluetooth.CBPeripheral)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didDisconnectPeripheral peripheral: CoreBluetooth.CBPeripheral, error: (any Swift.Error)?)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth.CBCentralManager, didFailToConnect peripheral: CoreBluetooth.CBPeripheral, error: (any Swift.Error)?)
+}
+extension iOSMcuManagerLibrary.McuMgrBleTransport : CoreBluetooth.CBPeripheralDelegate {
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didDiscoverServices error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didDiscoverCharacteristicsFor service: CoreBluetooth.CBService, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didUpdateNotificationStateFor characteristic: CoreBluetooth.CBCharacteristic, error: (any Swift.Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didUpdateValueFor characteristic: CoreBluetooth.CBCharacteristic, error: (any Swift.Error)?)
+}
+public enum PeripheralState {
+  case connecting
+  case initializing
+  case connected
+  case disconnecting
+  case disconnected
+  public static func == (a: iOSMcuManagerLibrary.PeripheralState, b: iOSMcuManagerLibrary.PeripheralState) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol PeripheralDelegate : AnyObject {
+  func peripheral(_ peripheral: CoreBluetooth.CBPeripheral, didChangeStateTo state: iOSMcuManagerLibrary.PeripheralState)
+}
+@objc public class McuMgrBleTransport : ObjectiveC.NSObject {
+  weak public var delegate: (any iOSMcuManagerLibrary.PeripheralDelegate)? {
+    get
+    set
+  }
+  weak public var logDelegate: (any iOSMcuManagerLibrary.McuMgrLogDelegate)?
+  public var numberOfParallelWrites: Swift.Int {
+    get
+    set
+  }
+  public var chunkSendDataToMtuSize: Swift.Bool
+  public var state: iOSMcuManagerLibrary.PeripheralState {
+    get
+  }
+  convenience public init(_ target: CoreBluetooth.CBPeripheral)
+  public init(_ targetIdentifier: Foundation.UUID)
+  public var name: Swift.String? {
+    get
+  }
+  public var identifier: Foundation.UUID {
+    get
+  }
+  @objc deinit
+}
+extension iOSMcuManagerLibrary.McuMgrBleTransport : iOSMcuManagerLibrary.McuMgrTransport {
+  public func getScheme() -> iOSMcuManagerLibrary.McuMgrScheme
+  public func send<T>(data: Foundation.Data, timeout: Swift.Int, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<T>) where T : iOSMcuManagerLibrary.McuMgrResponse
+  public func connect(_ callback: @escaping iOSMcuManagerLibrary.ConnectionCallback)
+  public func close()
+  public func addObserver(_ observer: any iOSMcuManagerLibrary.ConnectionObserver)
+  public func removeObserver(_ observer: any iOSMcuManagerLibrary.ConnectionObserver)
+}
+public enum McuMgrBleTransportConstant {
+  public static let SMP_SERVICE: CoreBluetooth.CBUUID
+  public static let SMP_CHARACTERISTIC: CoreBluetooth.CBUUID
+}
+public enum McuMgrBleTransportError : Swift.Error, Foundation.LocalizedError {
+  case centralManagerPoweredOff
+  case centralManagerNotReady
+  case missingService
+  case missingCharacteristic
+  case missingNotifyProperty
+  public var errorDescription: Swift.String? {
+    get
+  }
+  public static func == (a: iOSMcuManagerLibrary.McuMgrBleTransportError, b: iOSMcuManagerLibrary.McuMgrBleTransportError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public class McuMgrHeader {
+  public static let HEADER_LENGTH: Swift.Int
+  final public let op: Swift.UInt8!
+  final public let flags: Swift.UInt8!
+  final public let length: Swift.UInt16!
+  final public let groupId: Swift.UInt16!
+  final public let sequenceNumber: iOSMcuManagerLibrary.McuSequenceNumber!
+  final public let commandId: Swift.UInt8!
+  public init(data: Foundation.Data) throws
+  public init(op: Swift.UInt8, flags: Swift.UInt8, length: Swift.UInt16, groupId: Swift.UInt16, sequenceNumber: iOSMcuManagerLibrary.McuSequenceNumber, commandId: Swift.UInt8)
+  public func toData() -> Foundation.Data
+  public static func build(op: Swift.UInt8, flags: Swift.UInt8, len: Swift.UInt16, group: Swift.UInt16, seq: iOSMcuManagerLibrary.McuSequenceNumber, id: Swift.UInt8) -> [Swift.UInt8]
+  @objc deinit
+}
+extension iOSMcuManagerLibrary.McuMgrHeader : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+public enum McuMgrHeaderParseError : Swift.Error, Foundation.LocalizedError {
+  case invalidSize(Swift.Int)
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public class McuMgrImage {
+  public static let IMG_HASH_LEN: Swift.Int
+  final public let header: iOSMcuManagerLibrary.McuMgrImageHeader
+  final public let tlv: iOSMcuManagerLibrary.McuMgrImageTlv
+  final public let data: Foundation.Data
+  final public let hash: Foundation.Data
+  public init(data: Foundation.Data) throws
+  @objc deinit
+}
+public class McuMgrImageHeader {
+  public static let IMG_HEADER_LEN: Swift.Int
+  public static let IMG_HEADER_MAGIC: Swift.UInt32
+  public static let IMG_HEADER_MAGIC_V1: Swift.UInt32
+  public static let MAGIC_OFFSET: Swift.Int
+  public static let LOAD_ADDR_OFFSET: Swift.Int
+  public static let HEADER_SIZE_OFFSET: Swift.Int
+  public static let IMAGE_SIZE_OFFSET: Swift.Int
+  public static let FLAGS_OFFSET: Swift.Int
+  final public let magic: Swift.UInt32
+  final public let loadAddr: Swift.UInt32
+  final public let headerSize: Swift.UInt16
+  final public let imageSize: Swift.UInt32
+  final public let flags: Swift.UInt32
+  final public let version: iOSMcuManagerLibrary.McuMgrImageVersion
+  public init(data: Foundation.Data) throws
+  public func isLegacy() -> Swift.Bool
+  @objc deinit
+}
+public class McuMgrImageVersion {
+  public static let VERSION_OFFSET: Swift.Int
+  final public let major: Swift.UInt8
+  final public let minor: Swift.UInt8
+  final public let revision: Swift.UInt16
+  final public let build: Swift.UInt32
+  public init(data: Foundation.Data, offset: Swift.Int = VERSION_OFFSET)
+  @objc deinit
+}
+public class McuMgrImageTlv {
+  public static let IMG_TLV_SHA256: Swift.UInt8
+  public static let IMG_TLV_SHA256_V1: Swift.UInt8
+  public static let IMG_TLV_INFO_MAGIC: Swift.UInt16
+  public var tlvInfo: iOSMcuManagerLibrary.McuMgrImageTlvInfo?
+  public var trailerTlvEntries: [iOSMcuManagerLibrary.McuMgrImageTlvTrailerEntry]
+  final public let hash: Foundation.Data
+  public init(data: Foundation.Data, imageHeader: iOSMcuManagerLibrary.McuMgrImageHeader) throws
+  @objc deinit
+}
+public class McuMgrImageTlvInfo {
+  public static let SIZE: Swift.Int
+  final public let magic: Swift.UInt16
+  final public let total: Swift.UInt16
+  public init(data: Foundation.Data, offset: Swift.Int) throws
+  @objc deinit
+}
+public class McuMgrImageTlvTrailerEntry {
+  public static let MIN_SIZE: Swift.Int
+  final public let type: Swift.UInt8
+  final public let length: Swift.UInt16
+  final public let value: Foundation.Data
+  final public let size: Swift.Int
+  public init(data: Foundation.Data, offset: Swift.Int) throws
+  @objc deinit
+}
+public enum McuMgrImageParseError : Swift.Error {
+  case invalidHeaderMagic
+  case invalidTlvInfoMagic
+  case insufficientData
+  case hashNotFound
+  public static func == (a: iOSMcuManagerLibrary.McuMgrImageParseError, b: iOSMcuManagerLibrary.McuMgrImageParseError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension iOSMcuManagerLibrary.McuMgrImageParseError : Foundation.LocalizedError {
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public enum McuMgrLogLevel : Swift.Int {
+  case debug
+  case verbose
+  case info
+  case application
+  case warning
+  case error
+  public var name: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum McuMgrLogCategory : Swift.String {
+  case transport
+  case config
+  case crash
+  case `default`
+  case fs
+  case image
+  case log
+  case runTest
+  case stats
+  case dfu
+  case basic
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public protocol McuMgrLogDelegate : AnyObject {
+  func log(_ msg: Swift.String, ofCategory category: iOSMcuManagerLibrary.McuMgrLogCategory, atLevel level: iOSMcuManagerLibrary.McuMgrLogLevel)
+}
+public struct McuMgrManifest : Swift.Codable {
+  public let formatVersion: Swift.Int
+  public let time: Swift.Int
+  public let files: [iOSMcuManagerLibrary.McuMgrManifest.File]
+  public init(from url: Foundation.URL) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension iOSMcuManagerLibrary.McuMgrManifest {
+  public struct File : Swift.Codable {
+    public let size: Swift.Int
+    public let file: Swift.String
+    public let modTime: Swift.Int
+    public let mcuBootVersion: Swift.String?
+    public let type: Swift.String
+    public let board: Swift.String
+    public let soc: Swift.String
+    public let loadAddress: Swift.Int
+    public var image: Swift.Int {
+      get
+    }
+    public init(from decoder: any Swift.Decoder) throws
+    public func encode(to encoder: any Swift.Encoder) throws
+  }
+}
+public struct McuMgrROBBuffer<Key, Value> where Key : Swift.Comparable, Key : Swift.Hashable {
+}
+@_inheritsConvenienceInitializers open class McuMgrResponse : iOSMcuManagerLibrary.CBORMappable {
+  public var rc: Swift.UInt64
+  public var scheme: iOSMcuManagerLibrary.McuMgrScheme!
+  public var rawData: Foundation.Data?
+  public var header: iOSMcuManagerLibrary.McuMgrHeader!
+  public var payload: SwiftCBOR.CBOR?
+  public var payloadData: Foundation.Data?
+  public var returnCode: iOSMcuManagerLibrary.McuMgrReturnCode
+  public var coapCode: Swift.Int
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  public func isSuccess() -> Swift.Bool
+  public static func buildResponse<T>(scheme: iOSMcuManagerLibrary.McuMgrScheme, response: Foundation.Data?, coapPayload: Foundation.Data? = nil, coapCode: Swift.Int = 0) throws -> T where T : iOSMcuManagerLibrary.McuMgrResponse
+  public static func buildResponse<T>(scheme: iOSMcuManagerLibrary.McuMgrScheme, data: Foundation.Data?) throws -> T where T : iOSMcuManagerLibrary.McuMgrResponse
+  public static func buildCoapResponse<T>(scheme: iOSMcuManagerLibrary.McuMgrScheme, data: Foundation.Data, coapPayload: Foundation.Data, codeClass: Swift.Int, codeDetail: Swift.Int) throws -> T? where T : iOSMcuManagerLibrary.McuMgrResponse
+  public static func getExpectedLength(scheme: iOSMcuManagerLibrary.McuMgrScheme, responseData: Foundation.Data) -> Swift.Int?
+  @objc deinit
+}
+extension iOSMcuManagerLibrary.McuMgrResponse : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension iOSMcuManagerLibrary.McuMgrResponse : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+public enum McuMgrResponseParseError : Swift.Error {
+  case invalidDataSize
+  case invalidPayload
+  public static func == (a: iOSMcuManagerLibrary.McuMgrResponseParseError, b: iOSMcuManagerLibrary.McuMgrResponseParseError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension iOSMcuManagerLibrary.McuMgrResponseParseError : Foundation.LocalizedError {
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class McuMgrEchoResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  public var response: Swift.String?
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class McuMgrTaskStatsResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  public var tasks: [Swift.String : iOSMcuManagerLibrary.McuMgrTaskStatsResponse.TaskStatistics]?
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @_inheritsConvenienceInitializers public class TaskStatistics : iOSMcuManagerLibrary.CBORMappable {
+    public var priority: Swift.UInt64!
+    public var taskId: Swift.UInt64!
+    public var state: Swift.UInt64!
+    public var stackUse: Swift.UInt64!
+    public var stackSize: Swift.UInt64!
+    public var contextSwitchCount: Swift.UInt64!
+    public var runtime: Swift.UInt64!
+    public var lastCheckin: Swift.UInt64!
+    public var nextCheckin: Swift.UInt64!
+    required public init(cbor: SwiftCBOR.CBOR?) throws
+    @objc deinit
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class McuMgrMemoryPoolStatsResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  public var mpools: [Swift.String : iOSMcuManagerLibrary.McuMgrMemoryPoolStatsResponse.MemoryPoolStatistics]?
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @_inheritsConvenienceInitializers public class MemoryPoolStatistics : iOSMcuManagerLibrary.CBORMappable {
+    public var blockSize: Swift.UInt64!
+    public var numBlocks: Swift.UInt64!
+    public var numFree: Swift.UInt64!
+    public var minFree: Swift.UInt64!
+    required public init(cbor: SwiftCBOR.CBOR?) throws
+    @objc deinit
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class McuMgrDateTimeResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  public var datetime: Swift.String?
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @objc deinit
+}
+@_inheritsConvenienceInitializers final public class McuMgrParametersResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  final public var bufferSize: Swift.UInt64!
+  final public var bufferCount: Swift.UInt64!
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class McuMgrImageStateResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  public var images: [iOSMcuManagerLibrary.McuMgrImageStateResponse.ImageSlot]?
+  public var splitStatus: Swift.UInt64?
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @objc deinit
+}
+extension iOSMcuManagerLibrary.McuMgrImageStateResponse {
+  @_inheritsConvenienceInitializers public class ImageSlot : iOSMcuManagerLibrary.CBORMappable {
+    public var image: Swift.UInt64! {
+      get
+    }
+    public var slot: Swift.UInt64! {
+      get
+    }
+    public var version: Swift.String! {
+      get
+    }
+    public var hash: [Swift.UInt8]! {
+      get
+    }
+    public var bootable: Swift.Bool! {
+      get
+    }
+    public var pending: Swift.Bool! {
+      get
+    }
+    public var confirmed: Swift.Bool! {
+      get
+    }
+    public var active: Swift.Bool! {
+      get
+    }
+    public var permanent: Swift.Bool! {
+      get
+    }
+    required public init(cbor: SwiftCBOR.CBOR?) throws
+    @objc deinit
+  }
+}
+@_inheritsConvenienceInitializers public class McuMgrUploadResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  public var off: Swift.UInt64?
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class McuMgrCoreLoadResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  public var off: Swift.UInt64?
+  public var len: Swift.UInt64?
+  public var data: [Swift.UInt8]?
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class McuMgrFsUploadResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  public var off: Swift.UInt64?
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class McuMgrFsDownloadResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  public var off: Swift.UInt64?
+  public var len: Swift.UInt64?
+  public var data: [Swift.UInt8]?
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class McuMgrLevelListResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  public var logLevelNames: [Swift.String]?
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class McuMgrLogListResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  public var logNames: [Swift.String]?
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class McuMgrLogResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  public var next_index: Swift.UInt64?
+  public var logs: [iOSMcuManagerLibrary.McuMgrLogResponse.LogResult]?
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @_inheritsConvenienceInitializers public class LogResult : iOSMcuManagerLibrary.CBORMappable {
+    public var name: Swift.String?
+    public var type: Swift.UInt64?
+    public var entries: [iOSMcuManagerLibrary.McuMgrLogResponse.LogEntry]?
+    required public init(cbor: SwiftCBOR.CBOR?) throws
+    @objc deinit
+  }
+  @_inheritsConvenienceInitializers public class LogEntry : iOSMcuManagerLibrary.CBORMappable {
+    public var msg: [Swift.UInt8]?
+    public var ts: Swift.UInt64?
+    public var level: Swift.UInt64?
+    public var index: Swift.UInt64?
+    public var module: Swift.UInt64?
+    public var type: Swift.String?
+    required public init(cbor: SwiftCBOR.CBOR?) throws
+    public func getMessage() -> Swift.String?
+    @objc deinit
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class McuMgrStatsResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  public var name: Swift.String?
+  public var fields: [Swift.String : Swift.Int]?
+  public var group: Swift.String?
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class McuMgrStatsListResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  public var names: [Swift.String]?
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class McuMgrConfigResponse : iOSMcuManagerLibrary.McuMgrResponse {
+  public var val: Swift.String?
+  required public init(cbor: SwiftCBOR.CBOR?) throws
+  @objc deinit
+}
+public enum McuMgrScheme {
+  case ble, coapBle, coapUdp
+  public static func == (a: iOSMcuManagerLibrary.McuMgrScheme, b: iOSMcuManagerLibrary.McuMgrScheme) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum McuMgrTransportState {
+  case connected, disconnected
+  public static func == (a: iOSMcuManagerLibrary.McuMgrTransportState, b: iOSMcuManagerLibrary.McuMgrTransportState) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol ConnectionObserver : AnyObject {
+  func transport(_ transport: any iOSMcuManagerLibrary.McuMgrTransport, didChangeStateTo state: iOSMcuManagerLibrary.McuMgrTransportState)
+}
+public enum ConnectionResult {
+  case connected
+  case deferred
+  case failed(any Swift.Error)
+}
+public typealias ConnectionCallback = (iOSMcuManagerLibrary.ConnectionResult) -> Swift.Void
+public enum McuMgrTransportError : Swift.Error, Swift.Hashable {
+  case connectionTimeout
+  case connectionFailed
+  case disconnected
+  case sendTimeout
+  case sendFailed
+  case insufficientMtu(mtu: Swift.Int)
+  case badChunking
+  case badHeader
+  case badResponse
+  case waitAndRetry
+  public static func == (a: iOSMcuManagerLibrary.McuMgrTransportError, b: iOSMcuManagerLibrary.McuMgrTransportError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension iOSMcuManagerLibrary.McuMgrTransportError : Foundation.LocalizedError {
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public protocol McuMgrTransport : AnyObject {
+  func getScheme() -> iOSMcuManagerLibrary.McuMgrScheme
+  func send<T>(data: Foundation.Data, timeout: Swift.Int, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<T>) where T : iOSMcuManagerLibrary.McuMgrResponse
+  func connect(_ callback: @escaping iOSMcuManagerLibrary.ConnectionCallback)
+  func close()
+  func addObserver(_ observer: any iOSMcuManagerLibrary.ConnectionObserver)
+  func removeObserver(_ observer: any iOSMcuManagerLibrary.ConnectionObserver)
+}
+public typealias ResultLockKey = Swift.String
+public class ResultLock {
+  public var isOpen: Swift.Bool
+  public var error: (any Swift.Error)?
+  public var key: iOSMcuManagerLibrary.ResultLockKey?
+  public init(isOpen: Swift.Bool)
+  public func block() -> Swift.Result<Swift.Void, any Swift.Error>
+  public func block(timeout: Dispatch.DispatchTime) -> Swift.Result<Swift.Void, any Swift.Error>
+  public func open(key: iOSMcuManagerLibrary.ResultLockKey)
+  public func open(_ error: (any Swift.Error)? = nil)
+  public func close(key: iOSMcuManagerLibrary.ResultLockKey)
+  public func close()
+  @objc deinit
+}
+public class RunTestManager : iOSMcuManagerLibrary.McuManager {
+  public init(transporter: any iOSMcuManagerLibrary.McuMgrTransport)
+  public func test(name: Swift.String? = nil, token: Swift.String? = nil, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrResponse>)
+  public func list(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrResponse>)
+  @objc deinit
+}
+public class StatsManager : iOSMcuManagerLibrary.McuManager {
+  public init(transporter: any iOSMcuManagerLibrary.McuMgrTransport)
+  public func read(module: Swift.String, callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrStatsResponse>)
+  public func list(callback: @escaping iOSMcuManagerLibrary.McuMgrCallback<iOSMcuManagerLibrary.McuMgrStatsListResponse>)
+  @objc deinit
+}
+extension iOSMcuManagerLibrary.CrashManager.CrashTest : Swift.Equatable {}
+extension iOSMcuManagerLibrary.CrashManager.CrashTest : Swift.Hashable {}
+extension iOSMcuManagerLibrary.CrashManager.CrashTest : Swift.RawRepresentable {}
+extension iOSMcuManagerLibrary.FileSystemManager.UploadState : Swift.Equatable {}
+extension iOSMcuManagerLibrary.FileSystemManager.UploadState : Swift.Hashable {}
+extension iOSMcuManagerLibrary.FileSystemManager.UploadState : Swift.RawRepresentable {}
+extension iOSMcuManagerLibrary.FirmwareUpgradeState : Swift.Equatable {}
+extension iOSMcuManagerLibrary.FirmwareUpgradeState : Swift.Hashable {}
+extension iOSMcuManagerLibrary.FirmwareUpgradeMode : Swift.Equatable {}
+extension iOSMcuManagerLibrary.FirmwareUpgradeMode : Swift.Hashable {}
+extension iOSMcuManagerLibrary.ImageManager.UploadState : Swift.Equatable {}
+extension iOSMcuManagerLibrary.ImageManager.UploadState : Swift.Hashable {}
+extension iOSMcuManagerLibrary.ImageManager.UploadState : Swift.RawRepresentable {}
+extension iOSMcuManagerLibrary.ImageUploadAlignment : Swift.Equatable {}
+extension iOSMcuManagerLibrary.ImageUploadAlignment : Swift.Hashable {}
+extension iOSMcuManagerLibrary.ImageUploadAlignment : Swift.RawRepresentable {}
+extension iOSMcuManagerLibrary.McuMgrOperation : Swift.Equatable {}
+extension iOSMcuManagerLibrary.McuMgrOperation : Swift.Hashable {}
+extension iOSMcuManagerLibrary.McuMgrOperation : Swift.RawRepresentable {}
+extension iOSMcuManagerLibrary.McuMgrReturnCode : Swift.Equatable {}
+extension iOSMcuManagerLibrary.McuMgrReturnCode : Swift.Hashable {}
+extension iOSMcuManagerLibrary.McuMgrReturnCode : Swift.RawRepresentable {}
+extension iOSMcuManagerLibrary.PeripheralState : Swift.Equatable {}
+extension iOSMcuManagerLibrary.PeripheralState : Swift.Hashable {}
+extension iOSMcuManagerLibrary.McuMgrBleTransportError : Swift.Equatable {}
+extension iOSMcuManagerLibrary.McuMgrBleTransportError : Swift.Hashable {}
+extension iOSMcuManagerLibrary.McuMgrImageParseError : Swift.Equatable {}
+extension iOSMcuManagerLibrary.McuMgrImageParseError : Swift.Hashable {}
+extension iOSMcuManagerLibrary.McuMgrLogLevel : Swift.Equatable {}
+extension iOSMcuManagerLibrary.McuMgrLogLevel : Swift.Hashable {}
+extension iOSMcuManagerLibrary.McuMgrLogLevel : Swift.RawRepresentable {}
+extension iOSMcuManagerLibrary.McuMgrLogCategory : Swift.Equatable {}
+extension iOSMcuManagerLibrary.McuMgrLogCategory : Swift.Hashable {}
+extension iOSMcuManagerLibrary.McuMgrLogCategory : Swift.RawRepresentable {}
+extension iOSMcuManagerLibrary.McuMgrResponseParseError : Swift.Equatable {}
+extension iOSMcuManagerLibrary.McuMgrResponseParseError : Swift.Hashable {}
+extension iOSMcuManagerLibrary.McuMgrScheme : Swift.Equatable {}
+extension iOSMcuManagerLibrary.McuMgrScheme : Swift.Hashable {}
+extension iOSMcuManagerLibrary.McuMgrTransportState : Swift.Equatable {}
+extension iOSMcuManagerLibrary.McuMgrTransportState : Swift.Hashable {}

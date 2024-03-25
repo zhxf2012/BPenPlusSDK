@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="kBPPenCellReuseIdentifier" rowHeight="217" id="KGk-i7-Jjw" customClass="BPPenCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="217"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="217"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nmv-eA-8hb">
+                        <rect key="frame" x="5" y="5" width="310" height="207"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="N7a-rW-i36">
+                                <rect key="frame" x="15" y="5" width="280" height="197"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="SUs-XK-5uB">
+                                        <rect key="frame" x="0.0" y="0.0" width="280" height="38"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="msg-N2-NRr">
+                                                <rect key="frame" x="0.0" y="1" width="195" height="36"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fbX-pI-JLr" userLabel="nameLabel">
+                                                        <rect key="frame" x="0.0" y="0.0" width="195" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mac：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rR-nz-hwf" userLabel="macLabel">
+                                                        <rect key="frame" x="0.0" y="19" width="195" height="17"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xmo-NX-cuV">
+                                                <rect key="frame" x="215" y="4" width="65" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="65" id="hsH-ay-FxD"/>
+                                                </constraints>
+                                                <state key="normal" title="断开连接"/>
+                                                <connections>
+                                                    <action selector="connectButtonTouched:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="URg-aE-rd8"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="fe5-vB-ded">
+                                        <rect key="frame" x="0.0" y="40" width="280" height="37.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="电量:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TNI-L2-zlt">
+                                                <rect key="frame" x="0.0" y="0.0" width="37.5" height="37.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="kxY-mE-mrJ">
+                                                <rect key="frame" x="49.5" y="0.0" width="166" height="38.5"/>
+                                                <segments>
+                                                    <segment title="实时模式"/>
+                                                    <segment title="批量模式"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="swithSyncDataModeSegementValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="TdN-FZ-tzW"/>
+                                                </connections>
+                                            </segmentedControl>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1vK-mR-nYS">
+                                                <rect key="frame" x="227.5" y="0.0" width="52.5" height="37.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <state key="normal" title="闪一闪"/>
+                                                <connections>
+                                                    <action selector="flashButtonTouched:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Aw6-bs-fuT"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="5vX-uJ-OtA">
+                                        <rect key="frame" x="0.0" y="79.5" width="280" height="38"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="固件版本：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oaZ-gj-2q6" userLabel="fireworkLabel">
+                                                <rect key="frame" x="0.0" y="0.0" width="74" height="38"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8gm-tm-aQn" userLabel="fireworkCheckButton">
+                                                <rect key="frame" x="95" y="0.0" width="81" height="38"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <state key="normal" title="新固件检查"/>
+                                                <connections>
+                                                    <action selector="firewareVersionCheckButtonTouched:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="dr0-DS-pJB"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jEn-ei-bSM" userLabel="fireworkOTAButton">
+                                                <rect key="frame" x="197" y="0.0" width="83" height="38"/>
+                                                <state key="normal" title="固件更新"/>
+                                                <connections>
+                                                    <action selector="otaButtonTouched:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="YEH-Lh-9Hf"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="R8q-RQ-w36">
+                                        <rect key="frame" x="0.0" y="119.5" width="280" height="37.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="未同步数据量：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jnT-Ii-TGH" userLabel="unSyncDataPercentInforLabel">
+                                                <rect key="frame" x="0.0" y="0.0" width="89" height="37.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ns1-GT-few" userLabel="updateUNSyncDataPercentButton">
+                                                <rect key="frame" x="110" y="0.0" width="83" height="37.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <state key="normal" title="更新已用空间"/>
+                                                <connections>
+                                                    <action selector="updateUnSyncDataPercentButtonTouched:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qZQ-ac-otQ"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Hr-qb-7I2" userLabel="sleepTimeSetButton">
+                                                <rect key="frame" x="214" y="0.0" width="66" height="37.5"/>
+                                                <state key="normal" title="休眠设置"/>
+                                                <connections>
+                                                    <action selector="sleeptimeSetButtonTouched:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="GN8-jA-n3c"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ghf-aS-9gB">
+                                        <rect key="frame" x="0.0" y="159" width="280" height="38"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rmU-TU-P1G">
+                                                <rect key="frame" x="0.0" y="0.0" width="140" height="38"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="开始同步离线数据"/>
+                                                <connections>
+                                                    <action selector="startSyncButtonTouched:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xPL-Co-8F4"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PTm-EJ-fMK">
+                                                <rect key="frame" x="140" y="0.0" width="140" height="38"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="清除离线数据"/>
+                                                <connections>
+                                                    <action selector="clearFlashDataButtonTouched:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="dCI-YI-n5A"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="N7a-rW-i36" secondAttribute="bottom" constant="5" id="08K-vu-q3t"/>
+                            <constraint firstItem="N7a-rW-i36" firstAttribute="leading" secondItem="nmv-eA-8hb" secondAttribute="leading" constant="15" id="OD9-01-8fv"/>
+                            <constraint firstItem="N7a-rW-i36" firstAttribute="top" secondItem="nmv-eA-8hb" secondAttribute="top" constant="5" id="gwK-Zs-b5K"/>
+                            <constraint firstAttribute="trailing" secondItem="N7a-rW-i36" secondAttribute="trailing" constant="15" id="mOI-gv-DSI"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="nmv-eA-8hb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="ANh-yV-auA"/>
+                    <constraint firstItem="nmv-eA-8hb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="Iqv-FR-pxM"/>
+                    <constraint firstAttribute="bottom" secondItem="nmv-eA-8hb" secondAttribute="bottom" constant="5" id="mOa-sK-Mub"/>
+                    <constraint firstAttribute="trailing" secondItem="nmv-eA-8hb" secondAttribute="trailing" constant="5" id="rqz-Ji-YQF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="backBgView" destination="nmv-eA-8hb" id="dhw-sq-na0"/>
+                <outlet property="clearFlashDataButton" destination="PTm-EJ-fMK" id="iBr-PR-Tqp"/>
+                <outlet property="connectButton" destination="xmo-NX-cuV" id="2Bw-bC-15R"/>
+                <outlet property="fireworkCheckButton" destination="8gm-tm-aQn" id="3F9-7Y-oHd"/>
+                <outlet property="fireworkLabel" destination="oaZ-gj-2q6" id="JqB-4Z-EqI"/>
+                <outlet property="fireworkOTAButton" destination="jEn-ei-bSM" id="c8u-Wp-Vhz"/>
+                <outlet property="flashButton" destination="1vK-mR-nYS" id="BoN-SH-TAD"/>
+                <outlet property="macLabel" destination="8rR-nz-hwf" id="xaY-Bw-ihz"/>
+                <outlet property="nameLabel" destination="fbX-pI-JLr" id="Feo-yX-Jrt"/>
+                <outlet property="penSyncDataModeSegement" destination="kxY-mE-mrJ" id="jWi-E8-NEf"/>
+                <outlet property="powerInforLabel" destination="TNI-L2-zlt" id="m6y-tt-OWI"/>
+                <outlet property="sleepTimeSetButton" destination="7Hr-qb-7I2" id="QVd-Mg-HSc"/>
+                <outlet property="startSyncButton" destination="rmU-TU-P1G" id="MmP-z2-Z7y"/>
+                <outlet property="stateStack1" destination="fe5-vB-ded" id="Kcq-Ak-qHf"/>
+                <outlet property="stateStack2" destination="5vX-uJ-OtA" id="IPM-gx-bd9"/>
+                <outlet property="stateStack3" destination="R8q-RQ-w36" id="f6f-E9-eRt"/>
+                <outlet property="stateStack4" destination="Ghf-aS-9gB" id="0Yc-20-Zwe"/>
+                <outlet property="unSyncDataPercentInforLabel" destination="jnT-Ii-TGH" id="PZc-MX-Rjo"/>
+                <outlet property="updateUNSyncDataPercentButton" destination="ns1-GT-few" id="LXN-vP-iOy"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="168.41517857142856"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

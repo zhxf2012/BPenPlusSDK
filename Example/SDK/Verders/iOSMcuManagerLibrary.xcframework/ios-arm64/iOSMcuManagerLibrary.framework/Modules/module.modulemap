@@ -1,0 +1,4 @@
+framework module iOSMcuManagerLibrary {
+  header "iOSMcuManagerLibrary-Swift.h"
+  requires objc
+}

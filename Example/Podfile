@@ -1,13 +1,56 @@
-use_frameworks!
+project 'BPenSDKDemo.xcodeproj'
 
+# Uncomment the next line to define a global platform for your project
 platform :ios, '12.0'
 
-target 'BPenPlusSDK_Example' do
-  pod 'BPenPlusSDK', :path => '../'
 
-  target 'BPenPlusSDK_Tests' do
-    inherit! :search_paths
+# BPenPlusSDK支持三种方式，可以任选一种方式集成，本demo的三个target分别对应这三种方式。无论是oc工程还是swift工程亦或混编都可以选这三种方式中的一种
 
-    pod 'FBSnapshotTestCase'
+
+#1.cocoapods以及直接集成相关xcframework的方式： 在工程的podfile里相应target中添加od 'BPenPlusSDK'即可 ；
+ 
+####  设置所有target 12.0 或者排除arm64这些并非必须，所以此次可以注视或取用，取决于你的工程依赖和ide环境。   ####
+post_install do |installer|
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64" #（已知问题：若主工程使用了bugly 需要此项）
   end
+  
+  installer.generated_projects.each do |project|
+    project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'  #（已知问题：若ide为xcode14.3。可能需要此项）
+      end
+    end
+  end
+end
+
+target 'BPenDemoOC' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for BPenDemoOC
+  pod 'MBProgressHUD'
+  pod 'BPenPlusSDK'
+end
+
+#2.spm的方式集成 添加package https://github.com/zhxf2012/BPenPlusSDK/.git 使用最新版即可
+target 'BPenPlusDemoSwift' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for BPenPlusDemoSwift
+  
+  #BPenPlusDemoSwift引用的库
+  pod 'MBProgressHUD'
+end
+
+#3.直接集成随BPenPlusSDK.xcframework的 BPBleOTA.xcframework、iOSMcuManagerLibrary.xcframework、NordicDFU.xcframework、SwiftCBOR.xcframework、ZIPFoundation.xcframework
+target 'BPenDemoSwift' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for BPenDemoSwift
+
+  pod 'MBProgressHUD'
+  #本target通过 xcframework来集成BPenPlusSDK以及其依赖
 end

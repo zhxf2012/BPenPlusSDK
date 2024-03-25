@@ -1,0 +1,4 @@
+framework module NordicDFU {
+  header "NordicDFU-Swift.h"
+  requires objc
+}

@@ -1,0 +1,4 @@
+framework module BPBleOTA {
+  header "BPBleOTA-Swift.h"
+  requires objc
+}
