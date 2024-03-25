@@ -20,8 +20,8 @@ it, simply add the following line to your Podfile:
 pod 'BPenPlusSDK'
 ```
 
-BPenPlusSDK is also available through SPM（https://github.com/zhxf2012/BPenPlusSDK/.git ）. To install
-it, simply add the package （https://github.com/zhxf2012/BPenPlusSDK/.git ）with the latest tag to your project.
+BPenPlusSDK is also available through SPM（https://github.com/zhxf2012/BPenPlusSDK ）. To install
+it, simply add the package （https://github.com/zhxf2012/BPenPlusSDK ）with the latest tag to your project.
 
 
 
