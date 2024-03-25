@@ -2,3 +2,5 @@ Pods/
 */Pods/
 .build
 .swiftpm/*
+*/xcuserdata/*
+*.xcuserstate
