@@ -33,7 +33,7 @@ target 'BPenDemoOC' do
   pod 'BPenPlusSDK'
 end
 
-#2.spm的方式集成 添加package https://github.com/zhxf2012/BPenPlusSDK/.git 使用最新版即可
+#2.spm的方式集成 添加package https://github.com/zhxf2012/BPenPlusSDK 使用最新版即可
 target 'BPenPlusDemoSwift' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!

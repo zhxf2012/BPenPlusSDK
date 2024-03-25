@@ -17,7 +17,6 @@
 		830CA7332A833FDE0038592B /* BPPointsDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 830CA7322A833FDE0038592B /* BPPointsDAO.m */; };
 		830CEFEB29C5538B00684A76 /* BPPenCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 830CEFE929C5538B00684A76 /* BPPenCell.m */; };
 		830CEFEC29C5538B00684A76 /* BPPenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 830CEFEA29C5538B00684A76 /* BPPenCell.xib */; };
-		8322C2252BAD8608009E2D35 /* BPenPlusSDKSPM in Frameworks */ = {isa = PBXBuildFile; productRef = 8322C2242BAD8608009E2D35 /* BPenPlusSDKSPM */; };
 		832C2CC82A0A523500B961E5 /* rawData_saved_by_ios_bpensdk in Resources */ = {isa = PBXBuildFile; fileRef = 832C2CC32A0A523500B961E5 /* rawData_saved_by_ios_bpensdk */; };
 		832C2CC92A0A523500B961E5 /* rawData_saved_by_ios_bpensdk in Resources */ = {isa = PBXBuildFile; fileRef = 832C2CC32A0A523500B961E5 /* rawData_saved_by_ios_bpensdk */; };
 		832C2CCA2A0A523500B961E5 /* rawData_saved_by_ios_bpensdk in Resources */ = {isa = PBXBuildFile; fileRef = 832C2CC32A0A523500B961E5 /* rawData_saved_by_ios_bpensdk */; };
@@ -43,6 +42,7 @@
 		83E14DAC2A1386CB00F59002 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83E14DAA2A1386CB00F59002 /* Main.storyboard */; };
 		83E786EF2BB10E9200512D1D /* BPenPlusSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E786EE2BB10E9200512D1D /* BPenPlusSDK.xcframework */; };
 		83E786F02BB10E9200512D1D /* BPenPlusSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 83E786EE2BB10E9200512D1D /* BPenPlusSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		83E786F32BB1138800512D1D /* BPenPlusSDKSPM in Frameworks */ = {isa = PBXBuildFile; productRef = 83E786F22BB1138800512D1D /* BPenPlusSDKSPM */; };
 		9DF1A39ABFBA284307350F3B /* Pods_BPenDemoOC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C405B2653575F9FAAB9C294 /* Pods_BPenDemoOC.framework */; };
 		C72A4F8929C452D300C37AE3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C72A4F8829C452D300C37AE3 /* AppDelegate.m */; };
 		C72A4F8C29C452D300C37AE3 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C72A4F8B29C452D300C37AE3 /* SceneDelegate.m */; };
@@ -221,6 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				837144692AE9197400381B61 /* NordicDFU.xcframework in Frameworks */,
+				83E786F32BB1138800512D1D /* BPenPlusSDKSPM in Frameworks */,
 				0573FD93E7A61B0FA5DDF980 /* Pods_BPenDemoSwift.framework in Frameworks */,
 				8371446D2AE9197800381B61 /* ZIPFoundation.xcframework in Frameworks */,
 				837144632AE9196B00381B61 /* BPBleOTA.xcframework in Frameworks */,
@@ -235,7 +236,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7859799CC695CB695AA077EF /* Pods_BPenPlusDemoSwift.framework in Frameworks */,
-				8322C2252BAD8608009E2D35 /* BPenPlusSDKSPM in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +454,7 @@
 			);
 			name = BPenDemoSwift;
 			packageProductDependencies = (
+				83E786F22BB1138800512D1D /* BPenPlusSDKSPM */,
 			);
 			productName = BPenDemoSwift;
 			productReference = C768F23E24C2828A00B56FB9 /* BPenDemoSwift.app */;
@@ -476,7 +477,6 @@
 			);
 			name = BPenPlusDemoSwift;
 			packageProductDependencies = (
-				8322C2242BAD8608009E2D35 /* BPenPlusSDKSPM */,
 			);
 			productName = BPenDemoSwift;
 			productReference = C7BE40FA2721584700B72EA8 /* BPenPlusDemoSwift.app */;
@@ -510,7 +510,7 @@
 			);
 			mainGroup = C768F23524C2828A00B56FB9;
 			packageReferences = (
-				8394CB862AF4EFCD004DDC66 /* XCRemoteSwiftPackageReference "BPenPlusSDK" */,
+				83E786F12BB1138800512D1D /* XCRemoteSwiftPackageReference "BPenPlusSDK" */,
 			);
 			productRefGroup = C768F23F24C2828A00B56FB9 /* Products */;
 			projectDirPath = "";
@@ -1118,20 +1118,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		8394CB862AF4EFCD004DDC66 /* XCRemoteSwiftPackageReference "BPenPlusSDK" */ = {
+		83E786F12BB1138800512D1D /* XCRemoteSwiftPackageReference "BPenPlusSDK" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/zhxf2012/BPenPlusSDK";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.0;
+				minimumVersion = 2.2.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8322C2242BAD8608009E2D35 /* BPenPlusSDKSPM */ = {
+		83E786F22BB1138800512D1D /* BPenPlusSDKSPM */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8394CB862AF4EFCD004DDC66 /* XCRemoteSwiftPackageReference "BPenPlusSDK" */;
+			package = 83E786F12BB1138800512D1D /* XCRemoteSwiftPackageReference "BPenPlusSDK" */;
 			productName = BPenPlusSDKSPM;
 		};
 /* End XCSwiftPackageProductDependency section */
