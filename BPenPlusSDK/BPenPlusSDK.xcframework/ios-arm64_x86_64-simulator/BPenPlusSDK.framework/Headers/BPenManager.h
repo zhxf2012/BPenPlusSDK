@@ -113,6 +113,12 @@ typedef enum : NSUInteger {
 //设置后笔上的灯会绿色煽动几次 然后变为之前的蓝色，在连接的笔的情况下，该方法必然成功。应用层自行记录设置好的休眠时间。每次调用下面的方法设置会覆盖之前的值
 - (void)setPenSleepTime:(int) timeSpace;
 
+///设置智慧笔的传感器的曝光时间,默认4，设置的值越大则能耗越高采样率越高对反着握笔识别提升，达到14后笔反着（通常习惯笔镜头朝向内侧，反着写即笔沿自身中轴转180度镜头面超外侧）写也有较高采样效果；
+///一般不建议设置太大，如无必要建议不要设置此项
+///设置完后生效，若笔重启则会恢复默认配置
+/// @param timeSpace  曝光时间
+- (void)setExposureTime:(int) timeSpace;
+
 ///要求笔报告当前未同步的离线数据量，调用后当笔返回相关信息时，sdk会对外回调delegate的unSynchronizationDataPercentToPenDisk报告离线数据占笔内存储的百分比
 - (void)askPenToUpdateUnSynchronizationDataPercentToPenDisk;
 

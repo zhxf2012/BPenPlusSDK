@@ -88,6 +88,7 @@ enum PenManager {
         case clearFlashDataInPen            //直接清除笔内的数据
         case setEnableWritingLight(_ enable:Bool) // 设置笔是否开启书写时状态指示灯
         case setMaxPointCountInRealtimeFrame(_ maxCount:Int) // 设置笔是否开启书写时状态指示灯
+        case setExposureTime(_ exposureTime:Int) // 设置笔的曝光时间，详见sdk说明
     }
     
     // MARK: - 5. 从笔接收的数据或状态
@@ -148,7 +149,7 @@ class MyPenDataManager {
     init() {
         manager.delegate = proxy
         manager.drawDelegate = proxy
-        manager.smoothLevel = BPenSmoothLevelNone
+        //manager.smoothLevel = BPenSmoothLevelNone
     }
     
     var isScanning: Bool {
@@ -237,6 +238,8 @@ class MyPenDataManager {
             manager.setEnableWritingLight(enable)
         case .setMaxPointCountInRealtimeFrame(let maxCount):
             manager.setRealtimeMaxOutPointsCountEachFrame(Int32(maxCount))
+        case .setExposureTime(let exposureTime):
+            manager.setExposureTime(Int32(exposureTime))
         }
         
         return .success(order)

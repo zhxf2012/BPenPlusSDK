@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "BPenPlusSDK"
-  spec.version      = "2.2.3"
+  spec.version      = "2.3.0"
   spec.summary      = "BPenPlusSDK is a libray for smart pen product by shenzhen bangbangbang tech."
 
   # This description is used to generate tags and improve search results.
@@ -71,8 +71,8 @@ Pod::Spec.new do |spec|
   #
 
   # spec.platform     = :ios
-  spec.platform     = :ios, "12.0"
-  spec.ios.deployment_target = '12.0'
+  spec.platform     = :ios, "15.0"
+  spec.ios.deployment_target = '15.0'
   spec.swift_versions = ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5", "5.6", "5.7","5.8","5.9"]
   
   #  When using multiple platforms
@@ -145,6 +145,6 @@ Pod::Spec.new do |spec|
   # spec.dependency "JSONKit", "~> 1.4"
   
   spec.vendored_framework ='BPenPlusSDK/BPenPlusSDK.xcframework'
-  spec.dependency 'BPBleOTA', '~> 0.6.4'
+  spec.dependency 'BPBleOTA', '~> 0.7.0'
 
 end

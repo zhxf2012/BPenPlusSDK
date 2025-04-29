@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "BPenPlusSDKSPM",
-    platforms: [.iOS(.v12)],
+    platforms: [.iOS(.v15)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
@@ -14,7 +14,7 @@ let package = Package(
             targets: ["BPenPlusSDKSPM"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/zhxf2012/BPBleOTA", from: "0.6.4")
+        .package(url: "https://github.com/zhxf2012/BPBleOTA", from: "0.7.2")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
